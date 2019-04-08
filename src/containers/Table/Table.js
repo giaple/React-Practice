@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 
-import Aux from '../../hoc/Aux'
+import Aux from '../../hoc/Auxu'
 
 import {
     Table, Input, Button, Popconfirm, Form,
@@ -197,8 +197,8 @@ class EditableTable extends Component {
         });
         return (
             <div>
-                <Button onClick={this.handleAdd} type="primary" style={{ marginBottom: 16 }}>
-                    Add a row
+                <Button onClick={this.handleAdd} type="primary" style={{ marginBottom: 16, marginTop: 16 }}>
+                    Thêm Mới
                 </Button>
                 <Table
                     components={components}
