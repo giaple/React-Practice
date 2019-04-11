@@ -1,10 +1,14 @@
 
-import React,{Component} from 'react';
+import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 
 import {
-  Table, Input, InputNumber, Popconfirm, Form,
+  Table, Popconfirm, Form,Button
 } from 'antd';
+
+import EditableContext from '../../Contexts/EditableContext';
+import EditableCell from '../../components/table/EditableCell';
+import classes from './Table.module.css'
 
 const data = [];
 for (let i = 0; i < 2; i++) {
@@ -15,51 +19,8 @@ for (let i = 0; i < 2; i++) {
     address: `London Park no. ${i}`,
   });
 }
-const FormItem = Form.Item;
-const EditableContext = React.createContext();
 
-class EditableCell extends Component {
-  getInput = () => {
-    if (this.props.inputType === 'number') {
-      return <InputNumber />;
-    }
-    return <Input />;
-  };
 
-  render() {
-    const {
-      editing,
-      dataIndex,
-      title,
-      inputType,
-      record,
-      index,
-      ...restProps
-    } = this.props;
-    return (
-      <EditableContext.Consumer>
-        {(form) => {
-          const { getFieldDecorator } = form;
-          return (
-            <td {...restProps}>
-              {editing ? (
-                <FormItem style={{ margin: 0 }}>
-                  {getFieldDecorator(dataIndex, {
-                    rules: [{
-                      required: true,
-                      message: `Please Input ${title}!`,
-                    }],
-                    initialValue: record[dataIndex],
-                  })(this.getInput())}
-                </FormItem>
-              ) : restProps.children}
-            </td>
-          );
-        }}
-      </EditableContext.Consumer>
-    );
-  }
-}
 
 class EditableTable extends Component {
   constructor(props) {
@@ -96,25 +57,33 @@ class EditableTable extends Component {
                 <span>
                   <EditableContext.Consumer>
                     {form => (
-                      <a
-                        href="javascript:;"
+                      <button
                         onClick={() => this.save(form, record.key)}
                         style={{ marginRight: 8 }}
                       >
                         Save
-                      </a>
+                      </button>
                     )}
                   </EditableContext.Consumer>
                   <Popconfirm
                     title="Sure to cancel?"
                     onConfirm={() => this.cancel(record.key)}
                   >
-                    <a>Cancel</a>
+                    <button>Cancel</button>
                   </Popconfirm>
+
                 </span>
               ) : (
-                <a disabled={editingKey !== ''} onClick={() => this.edit(record.key)}>Edit</a>
-              )}
+                  <span>
+                    <button disabled={editingKey !== ''} onClick={() => this.edit(record.key)} className={classes.Button}>Edit</button>
+                    <Popconfirm
+                      title="Sure to delete?"
+                      onConfirm={() => this.delete(record)}
+                    >
+                      <button className={classes.Button}>Delete</button>
+                    </Popconfirm>
+                  </span>
+                )}
             </div>
           );
         },
@@ -127,6 +96,14 @@ class EditableTable extends Component {
   cancel = () => {
     this.setState({ editingKey: '' });
   };
+
+  delete = (record) => {
+    const newData = [...this.state.data];
+    const index = newData.indexOf(record);
+
+    newData.splice(index, 1)
+    this.setState({ data: newData});
+  }
 
   save(form, key) {
     form.validateFields((error, row) => {
@@ -146,6 +123,19 @@ class EditableTable extends Component {
         newData.push(row);
         this.setState({ data: newData, editingKey: '' });
       }
+    });
+  }
+
+  handleAdd = () => {
+    const  dataSource  = [...this.state.data];
+    const newData = {
+      key: dataSource.length +1,
+      name: `Edward King ${dataSource.length +1}`,
+      age: 32,
+      address: `London, Park Lane no. ${dataSource.length +1}`,
+    };
+    this.setState({
+      data: [...dataSource, newData]
     });
   }
 
@@ -178,6 +168,9 @@ class EditableTable extends Component {
 
     return (
       <EditableContext.Provider value={this.props.form}>
+        <Button onClick={this.handleAdd} type="primary" style={{ margin: 16 }}>
+          Add a row
+        </Button>
         <Table
           components={components}
           bordered

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Layout } from 'antd';
+import { Route, Switch } from 'react-router-dom';
 
 import Header from '../../components/header/Header'
-import Sider from '../../components/Sider/Sider'
+import Sider from '../../components/Sider/Sider';
+import Table from '../Table/Table';
 
 const {
     Footer, Content
@@ -16,7 +18,15 @@ class layout extends Component {
 
     onCollapse = () => {
         const collapsed = !this.state.collapsed
-        this.setState({ collapsed:  collapsed});
+        this.setState({ collapsed: collapsed });
+    }
+
+    alert = () => {
+        return <h2>alert</h2>;
+    }
+
+    personalInfor = () => {
+        return <h2>personalInfor</h2>;
     }
 
     render() {
@@ -27,9 +37,15 @@ class layout extends Component {
             >
             </Sider>
             <Layout>
-                <Header></Header>
+                <Header>
+                    
+                </Header>
                 <Content style={{ margin: '0 16px' }}>
-                    {this.props.children}
+                    <Switch>
+                        <Route path="/" exact component={Table} />
+                        <Route path="/alert" exact component={this.alert} />
+                        <Route path="/personalInfor" exact component={this.personalInfor} />
+                    </Switch>
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>
                     Ant Design ©2018 Created by Ant UED
