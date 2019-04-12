@@ -29,8 +29,24 @@ class layout extends Component {
         return <h2>personalInfor</h2>;
     }
 
+    renderRouter = () => {
+        return (<div>
+            <Switch>
+                <Route path="/person" exact component={Table} />
+                <Route path="/person/alert" exact component={this.alert} />
+                <Route path="/person/personalInfor" exact component={this.personalInfor} />
+            </Switch>
+
+        </div>
+
+        );
+    }
+
     render() {
+
+
         return <Layout style={{ minHeight: '100vh' }}>
+
             <Sider
                 collapsed={this.state.collapsed}
                 onCollapse={this.onCollapse}
@@ -38,14 +54,10 @@ class layout extends Component {
             </Sider>
             <Layout>
                 <Header>
-                    
+
                 </Header>
                 <Content style={{ margin: '0 16px' }}>
-                    <Switch>
-                        <Route path="/" exact component={Table} />
-                        <Route path="/alert" exact component={this.alert} />
-                        <Route path="/personalInfor" exact component={this.personalInfor} />
-                    </Switch>
+                    {this.renderRouter()}
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>
                     Ant Design ©2018 Created by Ant UED

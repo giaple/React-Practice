@@ -12,15 +12,15 @@ const {
 class sider extends Component {
 
     personHandler = () => {
-        this.props.history.push('/');
+        this.props.history.push('/person');
     }
 
     alertHandler = () => {
-        this.props.history.push('/alert');
+        this.props.history.push('/person/alert');
     }
 
     personalInforHandler = () =>{
-        this.props.history.push('/personalInfor')
+        this.props.history.push('/person/personalInfor')
     }
 
     componentDidMount(){

@@ -8,7 +8,7 @@ const {
 } = Layout;
 
 const header = (props) =>{
-    return <Header style={{ background: '#fff', padding: 0 }} >{props.children}</Header>
+    return <Header style={{ padding: 0 }} >{props.children}</Header>
 }
 
 export default header;
