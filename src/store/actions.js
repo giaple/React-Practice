@@ -1,0 +1,3 @@
+export const TOOLBAR_ACTION = 'TOOLBAR_ACTION'
+export const DOWN_PROFILE = 'DOWN_PROFILE';
+export const PROFILE_CLICKED = 'PROFILE_CLICKED';

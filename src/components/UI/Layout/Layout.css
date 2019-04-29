@@ -1,0 +1,29 @@
+/* container */
+.thx-body {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+}
+.thx-wrapper {
+	width: 100%;
+	flex-direction: row;
+	min-height: 640px;
+    max-height: 640px;
+}
+.main-container {
+	width: 1000px;
+	height: 688px;
+}
+.thx-window {
+    z-index: 98;
+    background-color: #222;
+	padding: 20px 80px 20px 80px;
+	position: relative;
+    left: 0px;
+    max-height: 640px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.insert-ref {
+    display: none;
+}
