@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
+import 'antd/dist/antd.css';
 
 import Layout from './containers/Layout/Layout';
-import Table from './containers/Table/Table';
-import './App.css';
+import Login from '../src/containers/Layout/Login/LoginLayout';
 
 class App extends Component {
 
   render() {
+
     return (
-      <Layout>
-        <button>Tạo Mới</button>
-        <Table/>
-      </Layout>
+      <BrowserRouter>
+        <div>
+          <Route path="/" exact component={Login}/>
+          <Route path="/person" component={Layout}/>
+        </div>
+      </BrowserRouter>
+
     );
   }
 }
